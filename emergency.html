@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediBed - Emergency Request</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+  <div id="app-container">
+    <div class="main-content">
+      <div class="content-area">
+        <div class="page-header">
+          <div>
+            <h1 class="welcome-msg text-high-priority">Emergency <span>Requests</span></h1>
+            <p class="welcome-sub">Immediate action required for the following cases.</p>
+          </div>
+          <button class="btn-primary" style="background-color: var(--emergency-red);">
+            <i class="ph ph-bell-ringing"></i> Sound Alarm
+          </button>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header" style="color: var(--emergency-red);">
+            <span>Urgent Request Queue</span>
+            <span class="dot" style="background-color: var(--emergency-red); box-shadow: 0 0 10px var(--emergency-red);"></span>
+          </div>
+          <div class="row-list" id="emergencyList">
+             <!-- Rendered via JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    initLayout('emergency');
+    
+    function renderEmergency() {
+      const list = document.getElementById('emergencyList');
+      list.innerHTML = '';
+      dummyData.emergencies.forEach(req => {
+        const isHigh = req.priority.toLowerCase() === 'high';
+        list.innerHTML += `
+          <div class="list-item ${isHigh ? 'urgent' : ''}">
+            <div style="display:flex; flex-direction:column; gap:4px;">
+              <div style="font-weight:600; font-size:16px;">${req.condition} <span style="font-size:12px; font-weight:400; color: var(--text-secondary);">(${req.time})</span></div>
+              <div style="color:var(--text-secondary); font-size:14px;">Patient: ${req.patient} • ID: ${req.id}</div>
+            </div>
+            <div>
+              <button class="btn-primary" style="${isHigh ? 'background-color: var(--emergency-red);' : ''}">
+                Acknowledge
+              </button>
+            </div>
+          </div>
+        `;
+      });
+    }
+    renderEmergency();
+  </script>
+</body>
+</html>

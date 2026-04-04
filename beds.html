@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediBed - Bed Management</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+  <div id="app-container">
+    <div class="main-content">
+      <div class="content-area">
+        <div class="page-header">
+          <div>
+            <h1 class="welcome-msg">Bed <span>Management</span></h1>
+            <p class="welcome-sub">Track and update hospital bed statuses.</p>
+          </div>
+          <button class="btn-primary" data-modal-target="addBedModal">
+            <i class="ph ph-plus"></i> Add Bed
+          </button>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <span>Bed Directory</span>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th style="cursor:pointer;" onclick="sortTable(dummyData.beds, 'id', 'string', renderBedsTable, 'bedsTableBody')">Bed ID ⇕</th>
+                <th>Type</th>
+                <th style="cursor:pointer;" onclick="sortTable(dummyData.beds, 'status', 'string', renderBedsTable, 'bedsTableBody')">Status ⇕</th>
+                <th>Ward</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="bedsTableBody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Bed Modal -->
+  <div class="modal-overlay" id="addBedModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Add New Bed</h2>
+        <button class="close-btn"><i class="ph ph-x"></i></button>
+      </div>
+      <form>
+        <div class="form-group">
+          <label>Bed ID</label>
+          <input type="text" class="form-control" placeholder="e.g. B-106">
+        </div>
+        <div class="row-dual" style="gap: 16px;">
+          <div class="form-group">
+            <label>Type</label>
+            <select class="form-control">
+              <option>General</option>
+              <option>ICU</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Initial Status</label>
+            <select class="form-control">
+              <option>Available</option>
+              <option>Occupied</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Ward Assignment</label>
+          <select class="form-control">
+            <option>Ward A</option>
+            <option>Ward B</option>
+            <option>ICU Unit</option>
+          </select>
+        </div>
+        <button type="button" class="btn-primary" style="width: 100%; justify-content: center;">Save Bed</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    initLayout('beds');
+    renderBedsTable(dummyData.beds, 'bedsTableBody');
+  </script>
+</body>
+</html>

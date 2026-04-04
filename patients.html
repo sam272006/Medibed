@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediBed - Patients</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+  <div id="app-container">
+    <div class="main-content">
+      <div class="content-area">
+        <div class="page-header">
+          <div>
+            <h1 class="welcome-msg">Patient <span>Management</span></h1>
+            <p class="welcome-sub">View and manage all hospital patients.</p>
+          </div>
+          <button class="btn-primary" data-modal-target="addPatientModal">
+            <i class="ph ph-plus"></i> Add Patient
+          </button>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <span>Patient List</span>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th style="cursor:pointer;" onclick="sortTable(dummyData.patients, 'id', 'string', renderPatientsTable, 'patientsTableBody')">ID ⇕</th>
+                <th style="cursor:pointer;" onclick="sortTable(dummyData.patients, 'name', 'string', renderPatientsTable, 'patientsTableBody')">Name ⇕</th>
+                <th>Age</th>
+                <th>Gender</th>
+                <th>Disease</th>
+                <th style="cursor:pointer;" onclick="sortTable(dummyData.patients, 'admission', 'string', renderPatientsTable, 'patientsTableBody')">Admission Date ⇕</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="patientsTableBody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Patient Modal -->
+  <div class="modal-overlay" id="addPatientModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Add New Patient</h2>
+        <button class="close-btn"><i class="ph ph-x"></i></button>
+      </div>
+      <form>
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" class="form-control" placeholder="e.g. John Doe">
+        </div>
+        <div class="row-dual" style="gap: 16px;">
+          <div class="form-group">
+            <label>Age</label>
+            <input type="number" class="form-control" placeholder="Age">
+          </div>
+          <div class="form-group">
+            <label>Gender</label>
+            <select class="form-control">
+              <option>Male</option>
+              <option>Female</option>
+              <option>Other</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Disease / Condition</label>
+          <input type="text" class="form-control" placeholder="e.g. Viral Fever">
+        </div>
+        <div class="form-group">
+          <label>Admission Date</label>
+          <input type="date" class="form-control">
+        </div>
+        <button type="button" class="btn-primary" style="width: 100%; justify-content: center;">Save Patient</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    initLayout('patients');
+    renderPatientsTable(dummyData.patients, 'patientsTableBody');
+  </script>
+</body>
+</html>

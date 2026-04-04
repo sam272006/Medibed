@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediBed - Ward Management</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+  <div id="app-container">
+    <div class="main-content">
+      <div class="content-area">
+        <div class="page-header">
+          <div>
+            <h1 class="welcome-msg">Ward <span>Management</span></h1>
+            <p class="welcome-sub">Manage hospital wards and capacities.</p>
+          </div>
+          <button class="btn-primary" data-modal-target="addWardModal">
+            <i class="ph ph-plus"></i> Add Ward
+          </button>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <span>Ward Directory</span>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Ward ID</th>
+                <th>Ward Name</th>
+                <th>Total Beds</th>
+                <th>Available Beds</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="wardsTableBody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Ward Modal -->
+  <div class="modal-overlay" id="addWardModal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Add New Ward</h2>
+        <button class="close-btn"><i class="ph ph-x"></i></button>
+      </div>
+      <form>
+        <div class="form-group">
+          <label>Ward ID</label>
+          <input type="text" class="form-control" placeholder="e.g. W-03">
+        </div>
+        <div class="form-group">
+          <label>Ward Name</label>
+          <input type="text" class="form-control" placeholder="e.g. Maternity Ward">
+        </div>
+        <div class="form-group">
+          <label>Initial Total Beds</label>
+          <input type="number" class="form-control" placeholder="e.g. 20">
+        </div>
+        <button type="button" class="btn-primary" style="width: 100%; justify-content: center;">Save Ward</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    initLayout('wards');
+    
+    function renderWardsTable() {
+      const tbody = document.getElementById('wardsTableBody');
+      tbody.innerHTML = '';
+      dummyData.wards.forEach(w => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${w.id}</td>
+          <td>${w.name}</td>
+          <td>${w.totalBeds}</td>
+          <td><span class="status-badge available">${w.availableBeds}</span></td>
+          <td>
+            <button class="btn-action">Edit</button>
+            <button class="btn-action delete">Delete</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+    renderWardsTable();
+  </script>
+</body>
+</html>

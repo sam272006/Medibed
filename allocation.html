@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediBed - Bed Allocation</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+  <div id="app-container">
+    <div class="main-content">
+      <div class="content-area">
+        <div class="page-header">
+          <div>
+            <h1 class="welcome-msg">Bed <span>Allocation</span></h1>
+            <p class="welcome-sub">Assign beds to patients efficiently.</p>
+          </div>
+        </div>
+
+        <div class="panel" style="max-width: 600px;">
+          <div class="panel-header">
+            <span>Assign Bed manually</span>
+          </div>
+          <form style="margin-top: 16px;">
+            <div class="form-group">
+              <label>Select Patient</label>
+              <select class="form-control" id="patientSelect">
+                <!-- Rendered conditionally via JS -->
+              </select>
+            </div>
+            
+            <div class="form-group">
+              <label>Select Available Bed</label>
+              <select class="form-control" id="bedSelect">
+                <!-- Rendered conditionally via JS -->
+              </select>
+            </div>
+            <p style="color: var(--text-secondary); font-size: 13px; margin-bottom: 24px;">Note: The bed dropdown only displays beds that are currently marked as "Available".</p>
+            
+            <button type="button" class="btn-primary">
+              <i class="ph ph-check-circle"></i> Allocate Bed
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    initLayout('allocation');
+
+    // Populate dropdowns
+    const patientSelect = document.getElementById('patientSelect');
+    dummyData.patients.forEach(p => {
+      const option = document.createElement('option');
+      option.value = p.id;
+      option.textContent = `${p.name} (${p.id})`;
+      patientSelect.appendChild(option);
+    });
+
+    const bedSelect = document.getElementById('bedSelect');
+    dummyData.beds.filter(b => b.status === 'Available').forEach(b => {
+      const option = document.createElement('option');
+      option.value = b.id;
+      option.textContent = `${b.id} - ${b.type} (${b.ward})`;
+      bedSelect.appendChild(option);
+    });
+  </script>
+</body>
+</html>

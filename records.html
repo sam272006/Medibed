@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediBed - Admission & Records</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body>
+  <div id="app-container">
+    <div class="main-content">
+      <div class="content-area">
+        <div class="page-header">
+          <div>
+            <h1 class="welcome-msg">Admission <span>Discharge Records</span></h1>
+            <p class="welcome-sub">Historical log of hospital bed assignments.</p>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <span>Assignment History</span>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Patient Name</th>
+                <th>Bed ID</th>
+                <th>Admission Date</th>
+                <th>Discharge Date</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="recordsTableBody">
+              <!-- Rendered via JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+  <script>
+    initLayout('records');
+
+    function renderRecordsTable() {
+      const tbody = document.getElementById('recordsTableBody');
+      tbody.innerHTML = '';
+      dummyData.records.forEach(r => {
+        const dischargeText = r.discharge === '-' ? '<span style="color:var(--status-available);">Active</span>' : r.discharge;
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${r.patient}</td>
+          <td>${r.bedId}</td>
+          <td>${r.admission}</td>
+          <td>${dischargeText}</td>
+          <td>
+            ${r.discharge === '-' ? '<button class="btn-action">Discharge</button>' : '<button class="btn-action" disabled>Archived</button>'}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+    renderRecordsTable();
+  </script>
+</body>
+</html>

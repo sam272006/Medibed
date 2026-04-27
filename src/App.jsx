@@ -210,7 +210,11 @@ export default function App() {
       .eq("password", password)
       .single();
 
-    if (error || !adminUser) return { success: false, message: "Invalid credentials" };
+    if (error && error.code !== 'PGRST116') {
+      console.error("Login DB error:", error);
+      return { success: false, message: "DB Error (might be paused): " + error.message };
+    }
+    if (!adminUser) return { success: false, message: "Invalid credentials" };
     
     // Map database snake_case to frontend camelCase
     const mappedUser = {
